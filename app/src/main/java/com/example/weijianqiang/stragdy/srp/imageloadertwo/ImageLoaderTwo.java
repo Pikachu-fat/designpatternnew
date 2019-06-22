@@ -6,8 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.weijianqiang.stragdy.ocp.DiskCache;
-import com.example.weijianqiang.stragdy.ocp.DoubleCache;
+import com.example.weijianqiang.stragdy.IImageCache;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -24,20 +23,9 @@ public class ImageLoaderTwo {
 
     private static ImageLoaderTwo imageLoaderTwo = null;
     private ExecutorService executorService = null;
-    //内存缓存
-    private ImageCache imageCache = new ImageCache();
+    //缓存策略，默认仅内存缓存
+    private IImageCache imageCache = new MemoryCache();
 
-    //本地sd卡缓存
-    private DiskCache diskCache = new DiskCache();
-
-    //内存 本地双缓存
-    DoubleCache doubleCache = new DoubleCache();
-
-    //是否使用本地缓存
-    private boolean useDiskCache = false;
-
-    //是否使用内存缓存
-    private boolean useDoubleCache = false;
 
     private ImageLoaderTwo() {
         init();
@@ -56,28 +44,33 @@ public class ImageLoaderTwo {
         executorService = Executors.newFixedThreadPool(cacheSize);
     }
 
+    /**
+     * 外界调用显示图片
+     *
+     * @param url       图片地址
+     * @param imageView 加载图片的view
+     */
     public void displayImage(final String url, final ImageView imageView) {
         if (TextUtils.isEmpty(url) || imageView == null) {
             Log.d(TAG, "displayImage: url is null");
             return;
         }
-
-
         //缓存中查找
-        //Bitmap bitmap = useDiskCache?diskCache.get(url):imageCache.get(url);
-        Bitmap bitmap = null;
-        if (useDoubleCache) {
-            bitmap = doubleCache.get(url);
-        } else if (useDiskCache) {
-            bitmap = diskCache.get(url);
-        } else {
-            bitmap = imageCache.get(url);
-        }
-        if (bitmap == null && bitmap != null) {
+        Bitmap bitmap = imageCache.get(url);
+        if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
             return;
         }
+        submitLoadRequest(url, imageView);
+    }
 
+    /**
+     * 发动网络请求瞎子啊图片
+     *
+     * @param url
+     * @param imageView
+     */
+    private void submitLoadRequest(final String url, final ImageView imageView) {
         //缓存中没有网络请求
         imageView.setTag(url);
         executorService.submit(new Runnable() {
@@ -90,9 +83,6 @@ public class ImageLoaderTwo {
                 } else if (imageView.getTag().equals(url)) {
                     imageView.setImageBitmap(bitmap);
                     imageCache.put(url, bitmap);
-                    if (useDiskCache) {
-                        diskCache.put(url, bitmap);
-                    }
                 }
             }
         });
@@ -127,11 +117,7 @@ public class ImageLoaderTwo {
         return null;
     }
 
-    public void isUseDiskCache(boolean useDiskCache) {
-        this.useDiskCache = useDiskCache;
-    }
-
-    public void setUseDoubleCache(boolean useDoubleCache) {
-        this.useDoubleCache = useDoubleCache;
+    public void setImageCache(IImageCache imageCache) {
+        this.imageCache = imageCache;
     }
 }
