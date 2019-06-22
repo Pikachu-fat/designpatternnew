@@ -1,4 +1,4 @@
-package com.example.weijianqiang.stragdy.srp;
+package com.example.weijianqiang.stragdy.ocp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

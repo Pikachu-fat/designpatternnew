@@ -6,7 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.weijianqiang.stragdy.srp.DiskCache;
+import com.example.weijianqiang.stragdy.ocp.DiskCache;
+import com.example.weijianqiang.stragdy.ocp.DoubleCache;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -29,8 +30,14 @@ public class ImageLoaderTwo {
     //本地sd卡缓存
     private DiskCache diskCache = new DiskCache();
 
+    //内存 本地双缓存
+    DoubleCache doubleCache = new DoubleCache();
+
     //是否使用本地缓存
     private boolean useDiskCache = false;
+
+    //是否使用内存缓存
+    private boolean useDoubleCache = false;
 
     private ImageLoaderTwo() {
         init();
@@ -54,9 +61,19 @@ public class ImageLoaderTwo {
             Log.d(TAG, "displayImage: url is null");
             return;
         }
+
+
         //缓存中查找
-        Bitmap bitmap = useDiskCache?diskCache.get(url):imageCache.get(url);
-        if (bitmap != null) {
+        //Bitmap bitmap = useDiskCache?diskCache.get(url):imageCache.get(url);
+        Bitmap bitmap = null;
+        if (useDoubleCache) {
+            bitmap = doubleCache.get(url);
+        } else if (useDiskCache) {
+            bitmap = diskCache.get(url);
+        } else {
+            bitmap = imageCache.get(url);
+        }
+        if (bitmap == null && bitmap != null) {
             imageView.setImageBitmap(bitmap);
             return;
         }
@@ -73,8 +90,8 @@ public class ImageLoaderTwo {
                 } else if (imageView.getTag().equals(url)) {
                     imageView.setImageBitmap(bitmap);
                     imageCache.put(url, bitmap);
-                    if (useDiskCache){
-                        diskCache.put(url,bitmap);
+                    if (useDiskCache) {
+                        diskCache.put(url, bitmap);
                     }
                 }
             }
@@ -110,8 +127,11 @@ public class ImageLoaderTwo {
         return null;
     }
 
-    private void isUseDiskCache(boolean useDiskCache){
+    public void isUseDiskCache(boolean useDiskCache) {
         this.useDiskCache = useDiskCache;
     }
 
+    public void setUseDoubleCache(boolean useDoubleCache) {
+        this.useDoubleCache = useDoubleCache;
+    }
 }
