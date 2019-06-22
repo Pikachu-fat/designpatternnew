@@ -19,4 +19,5 @@
         <activity android:name=".srp.SRPActivity"></activity>
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
 </manifest>

@@ -39,6 +39,7 @@ public class ImageLoaderOne {
 
     private void init() {
         final int maxSize = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        Log.d(TAG, "init: maxSize:"+maxSize);
         final int cacheSize = maxSize / 4;
         lruCache = new LruCache<String, Bitmap>(cacheSize) {
             @Override
@@ -48,19 +49,24 @@ public class ImageLoaderOne {
         };
     }
 
-    public void displayImageByURL(String url, ImageView view) {
+    public void displayImageByURL(final String url, final ImageView view) {
         if (view == null)
             return;
 
         view.setTag(url);
-        Bitmap bitmap = downLoadImage(url);
-        if (bitmap == null)
-            return;
+        executorServices.submit(new Runnable() {
+            @Override
+            public void run() {
+                Bitmap bitmap = downLoadImage(url);
+                if (bitmap == null)
+                    return;
 
-        if (view.getTag().equals(url)) {
-            view.setImageBitmap(bitmap);
-        }
-        lruCache.put(url,bitmap);
+                if (view.getTag().equals(url)) {
+                    view.setImageBitmap(bitmap);
+                }
+                lruCache.put(url,bitmap);
+            }
+        });
     }
 
     /**
