@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.weijianqiang.stragdy.ocp.OCPActivity;
 import com.example.weijianqiang.stragdy.srp.SRPActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button srp;
+    private Button ocp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +24,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void initView() {
         srp = (Button) findViewById(R.id.srp);
         srp.setOnClickListener(this);
+
+        ocp = (Button) findViewById(R.id.ocp);
+        ocp.setOnClickListener(this);
+
     }
 
     @Override
@@ -31,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.srp:
                 intent = new Intent(MainActivity.this, SRPActivity.class);
                 break;
+            case R.id.ocp:
+                intent = new Intent(MainActivity.this, OCPActivity.class);
             default:
                 break;
         }

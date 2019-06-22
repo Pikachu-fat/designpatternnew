@@ -13,4 +13,10 @@
         android:layout_height="wrap_content"
         android:text="@string/srp"/>
 
+    <Button
+        android:id="@+id/ocp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/ocp"/>
+
 </LinearLayout>

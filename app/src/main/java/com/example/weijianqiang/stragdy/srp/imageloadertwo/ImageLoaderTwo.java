@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.example.weijianqiang.stragdy.srp.DiskCache;
+
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
@@ -21,7 +23,14 @@ public class ImageLoaderTwo {
 
     private static ImageLoaderTwo imageLoaderTwo = null;
     private ExecutorService executorService = null;
+    //内存缓存
     private ImageCache imageCache = new ImageCache();
+
+    //本地sd卡缓存
+    private DiskCache diskCache = new DiskCache();
+
+    //是否使用本地缓存
+    private boolean useDiskCache = false;
 
     private ImageLoaderTwo() {
         init();
@@ -46,7 +55,7 @@ public class ImageLoaderTwo {
             return;
         }
         //缓存中查找
-        Bitmap bitmap = imageCache.get(url);
+        Bitmap bitmap = useDiskCache?diskCache.get(url):imageCache.get(url);
         if (bitmap != null) {
             imageView.setImageBitmap(bitmap);
             return;
@@ -64,6 +73,9 @@ public class ImageLoaderTwo {
                 } else if (imageView.getTag().equals(url)) {
                     imageView.setImageBitmap(bitmap);
                     imageCache.put(url, bitmap);
+                    if (useDiskCache){
+                        diskCache.put(url,bitmap);
+                    }
                 }
             }
         });
@@ -96,6 +108,10 @@ public class ImageLoaderTwo {
             }
         }
         return null;
+    }
+
+    private void isUseDiskCache(boolean useDiskCache){
+        this.useDiskCache = useDiskCache;
     }
 
 }
