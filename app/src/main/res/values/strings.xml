@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Stragdy</string>
+    <string name="srp">单一职责原则</string>
+    <string name="test_url">测试url</string>
+</resources>
