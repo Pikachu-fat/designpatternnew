@@ -13,6 +13,13 @@
         android:layout_height="wrap_content"
         android:text="@string/test_url"/>
 
+    <Button
+        android:id="@+id/imageloader_two"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/image_two"
+        android:textAllCaps="false"/>
+
     <ImageView
         android:id="@+id/imageview"
         android:layout_width="match_parent"
