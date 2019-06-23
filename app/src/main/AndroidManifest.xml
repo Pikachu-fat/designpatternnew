@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".srp.SRPActivity" />
         <activity android:name=".ocp.OCPActivity" />
-        <activity android:name=".lod.LODActivity"></activity>
+        <activity android:name=".lod.LODActivity" />
+        <activity android:name=".singleton.SingleTonActivity"></activity>
     </application>
 
 </manifest>

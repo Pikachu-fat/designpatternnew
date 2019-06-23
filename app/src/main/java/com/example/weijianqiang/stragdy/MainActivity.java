@@ -1,13 +1,14 @@
 package com.example.weijianqiang.stragdy;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.weijianqiang.stragdy.lod.LODActivity;
 import com.example.weijianqiang.stragdy.ocp.OCPActivity;
+import com.example.weijianqiang.stragdy.singleton.SingleTonActivity;
 import com.example.weijianqiang.stragdy.srp.SRPActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button srp;
     private Button ocp;
     private Button lod;
+    private Button single;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         lod = (Button) findViewById(R.id.lod);
         lod.setOnClickListener(this);
 
+        single = (Button) findViewById(R.id.singleton);
+        single.setOnClickListener(this);
+
     }
 
     @Override
@@ -48,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.lod:
                 intent = new Intent(MainActivity.this,LODActivity.class);
                 break;
+            case R.id.singleton:
+                intent = new Intent(MainActivity.this,SingleTonActivity.class);
             default:
                 break;
         }

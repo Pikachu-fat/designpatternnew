@@ -5,4 +5,6 @@
     <string name="image_two">imageloadertwo</string>
     <string name="ocp">单一职责原则（OCP）</string>
     <string name="lod">迪米特原则（lod）</string>
+    <string name="single">单例模式</string>
+    <string name="singleton">单例模式</string>
 </resources>
