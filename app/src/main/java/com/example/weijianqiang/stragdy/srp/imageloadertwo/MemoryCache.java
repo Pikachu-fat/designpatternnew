@@ -14,7 +14,6 @@ import com.example.weijianqiang.stragdy.IImageCache;
 public class MemoryCache implements IImageCache {
 
     private static final String TAG = "MemoryCache";
-//    private static MemoryCache imageCache = null;
 
     //图片缓存器
     LruCache<String, Bitmap> lruCache = null;
@@ -22,13 +21,6 @@ public class MemoryCache implements IImageCache {
     public MemoryCache() {
         init();
     }
-
-//    public static MemoryCache getInstance() {
-//        if (imageCache == null) {
-//            imageCache = new MemoryCache();
-//        }
-//        return imageCache;
-//    }
 
     private void init() {
         lruCache = new LruCache<String, Bitmap>(Runtime.getRuntime().availableProcessors()) {
