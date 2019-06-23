@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.weijianqiang.stragdy.IImageCache;
+import com.example.weijianqiang.stragdy.singleton.ImageLoaderConfig;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -25,15 +26,36 @@ public class ImageLoaderTwo {
     private ExecutorService executorService = null;
     //缓存策略，默认仅内存缓存
     private IImageCache imageCache = new MemoryCache();
+    private ImageLoaderConfig imageLoaderConfig;
+    private int threadCount;
 
 
     private ImageLoaderTwo() {
         init();
     }
 
+    public void preInit(ImageLoaderConfig imageLoaderConfig){
+        if (imageLoaderConfig == null){
+            return;
+        }
+
+        this.imageLoaderConfig = imageLoaderConfig;
+        imageCache = imageLoaderConfig.getImageCache();
+        threadCount = imageLoaderConfig.getThreadCount();
+
+    }
+
+    /**
+     * DCL
+     * @return
+     */
     public static ImageLoaderTwo getInstance() {
         if (imageLoaderTwo == null) {
-            imageLoaderTwo = new ImageLoaderTwo();
+            synchronized (ImageLoaderTwo.class){
+                if (imageLoaderTwo == null){
+                    imageLoaderTwo = new ImageLoaderTwo();
+                }
+            }
         }
         return imageLoaderTwo;
     }
@@ -62,7 +84,14 @@ public class ImageLoaderTwo {
             return;
         }
         submitLoadRequest(url, imageView);
+        //disPlayImage(url,imageView,null,null);
     }
+
+//    public void disPlayImage(String url,ImageView imageView,ImageLoaderConfig imageLoaderConfig,Listener listener){
+//        BitmapRequest bitmapRequest = new BitmapRequest(url,imageView,imageLoaderConfig,listener);
+//        bitmapRequest.imageLoaderConfig = bitmapRequest.imageLoaderConfig != null?bitmapRequest.imageLoaderConfig:imageLoaderConfig.
+//    }
+
 
     /**
      * 发动网络请求瞎子啊图片
@@ -119,5 +148,9 @@ public class ImageLoaderTwo {
 
     public void setImageCache(IImageCache imageCache) {
         this.imageCache = imageCache;
+    }
+
+    public interface Listener{
+        public void onCompleted();
     }
 }
