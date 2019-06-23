@@ -100,6 +100,7 @@ public class ImageLoaderTwo {
      * @param imageView
      */
     private void submitLoadRequest(final String url, final ImageView imageView) {
+        //一样的测试
         //测试冲突
         //缓存中没有网络请求
         imageView.setTag(url);
