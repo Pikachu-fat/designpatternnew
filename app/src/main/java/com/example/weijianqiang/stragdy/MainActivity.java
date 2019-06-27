@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.weijianqiang.stragdy.jianzaozhe.BuilderActivity;
 import com.example.weijianqiang.stragdy.lod.LODActivity;
 import com.example.weijianqiang.stragdy.ocp.OCPActivity;
 import com.example.weijianqiang.stragdy.singleton.SingleTonActivity;
@@ -17,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button ocp;
     private Button lod;
     private Button single;
+    private Button builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         single = (Button) findViewById(R.id.singleton);
         single.setOnClickListener(this);
 
+        builder = (Button) findViewById(R.id.build);
+        builder.setOnClickListener(this);
     }
 
     @Override
@@ -51,10 +55,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent = new Intent(MainActivity.this, OCPActivity.class);
                 break;
             case R.id.lod:
-                intent = new Intent(MainActivity.this,LODActivity.class);
+                intent = new Intent(MainActivity.this, LODActivity.class);
                 break;
             case R.id.singleton:
-                intent = new Intent(MainActivity.this,SingleTonActivity.class);
+                intent = new Intent(MainActivity.this, SingleTonActivity.class);
+                break;
+            case R.id.build:
+                intent = new Intent(MainActivity.this, BuilderActivity.class);
+                break;
             default:
                 break;
         }

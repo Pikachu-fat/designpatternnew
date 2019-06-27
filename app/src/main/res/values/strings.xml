@@ -7,4 +7,5 @@
     <string name="lod">迪米特原则（lod）</string>
     <string name="single">单例模式</string>
     <string name="singleton">单例模式</string>
+    <string name="build">建造者模式</string>
 </resources>

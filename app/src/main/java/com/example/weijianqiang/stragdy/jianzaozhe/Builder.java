@@ -6,4 +6,8 @@ package com.example.weijianqiang.stragdy.jianzaozhe;
  * Description:
  */
 public abstract class Builder {
+    public abstract void buildBoard(String board);
+    public abstract void buildDisplay(String display);
+    public abstract void buildOs(String os);
+    public abstract Computer create();
 }

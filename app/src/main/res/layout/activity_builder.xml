@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".jianzaozhe.BuilderActivity">
 
+    <Button
+        android:id="@+id/testbtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/build"/>
+
 </android.support.constraint.ConstraintLayout>
