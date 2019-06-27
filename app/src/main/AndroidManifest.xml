@@ -21,7 +21,8 @@
         <activity android:name=".srp.SRPActivity" />
         <activity android:name=".ocp.OCPActivity" />
         <activity android:name=".lod.LODActivity" />
-        <activity android:name=".singleton.SingleTonActivity"></activity>
+        <activity android:name=".singleton.SingleTonActivity" />
+        <activity android:name=".jianzaozhe.BuilderActivity"></activity>
     </application>
 
 </manifest>
